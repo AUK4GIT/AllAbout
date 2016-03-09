@@ -7,8 +7,14 @@
 //
 
 #import "AboutTableVC.h"
+#import "Helper.h"
+#import "ModelCoordinator.h"
 
 @interface AboutTableVC ()
+@property(nonatomic, strong) NSArray *albums;
+@property(nonatomic, strong) Helper *helper;
+@property(nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+@property(nonatomic, strong) ModelCoordinator *modelCoordinator;
 
 @end
 
@@ -16,12 +22,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // Initialize the refresh control.
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor lightGrayColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(fetchDataFromServer)
+                  forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,15 +39,33 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Custom Methods
+
+/**
+    fetch data from server
+ **/
+- (void)fetchDataFromServer {
+//    [self.helper cancelDataTask];
+//    [self.activityIndicator startAnimating];
+//    [self.helper fetchAlbumsFromService:^(NSArray *dbAlbums){
+//        if (dbAlbums.count > 0) {
+//            self.albums = dbAlbums;
+//            [self.tableView reloadData];
+//        } else {
+//            //show Alert. No Albums found
+//        }
+//        [self.refreshControl endRefreshing];
+//        [self.activityIndicator stopAnimating];
+//    }];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
     return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
     return 0;
 }
 

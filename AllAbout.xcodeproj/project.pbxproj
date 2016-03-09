@@ -16,6 +16,11 @@
 		EDBFC84E1C90947200715078 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDBFC84C1C90947200715078 /* LaunchScreen.storyboard */; };
 		EDBFC8591C90947200715078 /* AllAboutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBFC8581C90947200715078 /* AllAboutTests.m */; };
 		EDBFC8641C90947200715078 /* AllAboutUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBFC8631C90947200715078 /* AllAboutUITests.m */; };
+		EDBFC8791C90961200715078 /* Country+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBFC8721C90961200715078 /* Country+CoreDataProperties.m */; };
+		EDBFC87A1C90961200715078 /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBFC8741C90961200715078 /* Country.m */; };
+		EDBFC87B1C90961200715078 /* About+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBFC8761C90961200715078 /* About+CoreDataProperties.m */; };
+		EDBFC87C1C90961200715078 /* About.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBFC8781C90961200715078 /* About.m */; };
+		EDBFC8801C9096F500715078 /* ModelCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBFC87F1C9096F500715078 /* ModelCoordinator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +58,16 @@
 		EDBFC85F1C90947200715078 /* AllAboutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AllAboutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDBFC8631C90947200715078 /* AllAboutUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AllAboutUITests.m; sourceTree = "<group>"; };
 		EDBFC8651C90947200715078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDBFC8711C90961200715078 /* Country+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Country+CoreDataProperties.h"; path = "Models/Country+CoreDataProperties.h"; sourceTree = "<group>"; };
+		EDBFC8721C90961200715078 /* Country+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Country+CoreDataProperties.m"; path = "Models/Country+CoreDataProperties.m"; sourceTree = "<group>"; };
+		EDBFC8731C90961200715078 /* Country.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Country.h; path = Models/Country.h; sourceTree = "<group>"; };
+		EDBFC8741C90961200715078 /* Country.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Country.m; path = Models/Country.m; sourceTree = "<group>"; };
+		EDBFC8751C90961200715078 /* About+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "About+CoreDataProperties.h"; path = "Models/About+CoreDataProperties.h"; sourceTree = "<group>"; };
+		EDBFC8761C90961200715078 /* About+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "About+CoreDataProperties.m"; path = "Models/About+CoreDataProperties.m"; sourceTree = "<group>"; };
+		EDBFC8771C90961200715078 /* About.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = About.h; path = Models/About.h; sourceTree = "<group>"; };
+		EDBFC8781C90961200715078 /* About.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = About.m; path = Models/About.m; sourceTree = "<group>"; };
+		EDBFC87E1C9096F500715078 /* ModelCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModelCoordinator.h; path = Models/ModelCoordinator.h; sourceTree = "<group>"; };
+		EDBFC87F1C9096F500715078 /* ModelCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModelCoordinator.m; path = Models/ModelCoordinator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +118,8 @@
 		EDBFC83A1C90947200715078 /* AllAbout */ = {
 			isa = PBXGroup;
 			children = (
+				EDBFC8811C9096FE00715078 /* TableVC */,
+				EDBFC87D1C90961A00715078 /* Models */,
 				EDBFC83E1C90947200715078 /* AppDelegate.h */,
 				EDBFC83F1C90947200715078 /* AppDelegate.m */,
 				EDBFC8411C90947200715078 /* ViewController.h */,
@@ -141,6 +158,30 @@
 				EDBFC8651C90947200715078 /* Info.plist */,
 			);
 			path = AllAboutUITests;
+			sourceTree = "<group>";
+		};
+		EDBFC87D1C90961A00715078 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EDBFC8711C90961200715078 /* Country+CoreDataProperties.h */,
+				EDBFC8721C90961200715078 /* Country+CoreDataProperties.m */,
+				EDBFC8731C90961200715078 /* Country.h */,
+				EDBFC8741C90961200715078 /* Country.m */,
+				EDBFC8751C90961200715078 /* About+CoreDataProperties.h */,
+				EDBFC8761C90961200715078 /* About+CoreDataProperties.m */,
+				EDBFC8771C90961200715078 /* About.h */,
+				EDBFC8781C90961200715078 /* About.m */,
+				EDBFC87E1C9096F500715078 /* ModelCoordinator.h */,
+				EDBFC87F1C9096F500715078 /* ModelCoordinator.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		EDBFC8811C9096FE00715078 /* TableVC */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = TableVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,9 +314,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDBFC8801C9096F500715078 /* ModelCoordinator.m in Sources */,
+				EDBFC8791C90961200715078 /* Country+CoreDataProperties.m in Sources */,
 				EDBFC8431C90947200715078 /* ViewController.m in Sources */,
 				EDBFC8491C90947200715078 /* AllAbout.xcdatamodeld in Sources */,
 				EDBFC8401C90947200715078 /* AppDelegate.m in Sources */,
+				EDBFC87A1C90961200715078 /* Country.m in Sources */,
+				EDBFC87C1C90961200715078 /* About.m in Sources */,
+				EDBFC87B1C90961200715078 /* About+CoreDataProperties.m in Sources */,
 				EDBFC83D1C90947200715078 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,7 +413,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -404,7 +450,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

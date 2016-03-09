@@ -1,5 +1,5 @@
 //
-//  ModelCoordinator.h
+//  Helper.h
 //  AllAbout
 //
 //  Created by Uday Kiran Ailapaka on 09/03/16.
@@ -7,11 +7,11 @@
 //
 
 /**
- This class is the interface for all database interactions.
+ This class is interface for all webservices the app connects to.
  **/
 
 #import <Foundation/Foundation.h>
 
-@interface ModelCoordinator : NSObject
+@interface Helper : NSObject
 
 @end

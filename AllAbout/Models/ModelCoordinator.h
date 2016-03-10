@@ -14,4 +14,6 @@
 
 @interface ModelCoordinator : NSObject
 
+- (NSArray *)fetchData;
+- (void)saveToDBDetails:(NSArray *)details withCountry:(NSString *)country;
 @end

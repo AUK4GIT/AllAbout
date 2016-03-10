@@ -18,6 +18,13 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [super initWithCoder:aDecoder]) {
+        
+    }
+    return self;
+}
+
 /*
     Creates subviews on cells and add constraints.
  */
@@ -36,7 +43,12 @@
     [self.descriptionLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:18.0f]];
     [self.descriptionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.contentView addSubview:self.descriptionLabel];
-
+    
+    UIImage *placehoderImage = [UIImage imageNamed:@"placeholder.png"];
+    self.imgView = [[UIImageView alloc] initWithImage:placehoderImage];
+    [self.imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.contentView addSubview:self.imageView];
+    
 }
 
 - (void)awakeFromNib {
@@ -48,6 +60,23 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)layoutSubviews {
+//    [self setNeedsUpdateConstraints];
+}
+
+- (void)updateConstraints {
+    [super updateConstraints];
+    
+    /*
+     Add constraints: 'horizantal center and top' to imageView
+     */
+    NSLayoutConstraint *imgTopLayoutConstr = [NSLayoutConstraint constraintWithItem:self.imgView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:8.0];
+    NSLayoutConstraint *centerYConstr = [NSLayoutConstraint constraintWithItem:self.imgView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
+
+    [self addConstraints:@[imgTopLayoutConstr, centerYConstr]];
+
 }
 
 @end

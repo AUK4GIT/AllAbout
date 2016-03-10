@@ -13,5 +13,10 @@
 #import <Foundation/Foundation.h>
 
 @interface Helper : NSObject
+@property(nonatomic, weak) NSURLSessionDataTask *dataTask;
+@property(nonatomic, weak) NSURLSessionDownloadTask *downloadPhotoTask;
 
+- (void)fetchDataFromDB: (void (^)(NSArray *))completionBlock;
+- (void)fetchDataFromService:(void (^)(NSArray *))completionBlock;
+- (void)cancelDataTask;
 @end

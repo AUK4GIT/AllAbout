@@ -8,14 +8,12 @@
 
 #import "AboutTableVC.h"
 #import "Helper.h"
-#import "ModelCoordinator.h"
 #import "AboutTableCell.h"
 
 @interface AboutTableVC ()
 @property(nonatomic, strong) NSArray *detailsArray;
 @property(nonatomic, strong) Helper *helper;
 @property(nonatomic, strong) UIActivityIndicatorView *activityIndicator;
-@property(nonatomic, strong) ModelCoordinator *modelCoordinator;
 @end
 
 @implementation AboutTableVC
@@ -42,6 +40,9 @@ static NSString * const reuseIdentifier = @"AboutTableCell";
     [self.refreshControl addTarget:self
                             action:@selector(fetchDataFromServer)
                   forControlEvents:UIControlEventValueChanged];
+    
+    self.helper = [[Helper alloc] init];
+    [self fetchDataFromDB];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,19 +56,33 @@ static NSString * const reuseIdentifier = @"AboutTableCell";
     fetch data from server
  **/
 - (void)fetchDataFromServer {
-//    [self.helper cancelDataTask];
-//    [self.activityIndicator startAnimating];
-//    [self.helper fetchAlbumsFromService:^(NSArray *dbAlbums){
-//        if (dbAlbums.count > 0) {
-//            self.albums = dbAlbums;
-//            [self.tableView reloadData];
-//        } else {
-//            //show Alert. No Albums found
-//        }
-//        [self.refreshControl endRefreshing];
-//        [self.activityIndicator stopAnimating];
-//    }];
+    [self.helper cancelDataTask];
+    [self.activityIndicator startAnimating];
+    [self.helper fetchDataFromService:^(NSArray *details){
+        if (details.count > 0) {
+            self.detailsArray = details;
+            [self.tableView reloadData];
+        } else {
+            //show Alert. No Albums found
+        }
+        [self.refreshControl endRefreshing];
+        [self.activityIndicator stopAnimating];
+    }];
 }
+
+//checks for existing data in the database else fetch the albums from service.
+- (void)fetchDataFromDB {
+    
+    [self.helper fetchDataFromDB:^(NSArray *dbDetails) {
+        if (dbDetails.count > 0) {
+            self.detailsArray = dbDetails;
+            [self.tableView reloadData];
+        } else {
+            [self fetchDataFromServer];
+        }
+    }];
+}
+
 
 #pragma mark - Table view data source
 
@@ -81,7 +96,7 @@ static NSString * const reuseIdentifier = @"AboutTableCell";
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+    AboutTableCell *cell = (AboutTableCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     

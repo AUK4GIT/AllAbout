@@ -23,4 +23,55 @@
     }
     return self;
 }
+
+- (NSArray *)fetchData {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"About"];
+    NSError *error = nil;
+    NSArray *results = [managedContext executeFetchRequest:request error:&error];
+    if (!results) {
+        NSLog(@"Error fetching About objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
+    return results == nil ? @[] : results;
+}
+
+- (void)saveToDBDetails:(NSArray *)details withCountry:(NSString *)countryName{
+    [self deleteData:@"Country"];
+    [self deleteData:@"About"];
+    [self saveContext];
+    
+    NSEntityDescription *entityPerson = [NSEntityDescription entityForName:@"Country" inManagedObjectContext:managedContext];
+    Country *country = (Country *)[[NSManagedObject alloc] initWithEntity:entityPerson insertIntoManagedObjectContext:managedContext];
+    country.title = countryName;
+    
+    for (NSDictionary *about in details) {
+            [country saveData:about withCountry:countryName];
+    }
+    [self saveContext];
+}
+
+/*
+    Deletes the data of provided entity
+ */
+- (void)deleteData:(NSString *)entity {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:entity];
+    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+    
+    NSError *deleteError = nil;
+    [appDelegate.persistentStoreCoordinator executeRequest:delete withContext:managedContext error:&deleteError];
+    if(deleteError){
+        NSAssert(NO, @"Error Deleting Entity: %@\n%@", [deleteError localizedDescription], [deleteError userInfo]);
+    }
+}
+
+/*
+    Saves ManagedObjectContext Changes
+ */
+- (void)saveContext{
+    NSError *error = nil;
+    if ([managedContext save:&error] == NO) {
+        NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
+}
+
 @end

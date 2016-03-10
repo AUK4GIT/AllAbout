@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Country : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
+- (void)saveData:(NSDictionary *)about withCountry:(NSString *)country;
 
 @end
 

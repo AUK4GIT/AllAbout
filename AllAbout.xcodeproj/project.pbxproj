@@ -23,6 +23,7 @@
 		EDBFC8801C9096F500715078 /* ModelCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBFC87F1C9096F500715078 /* ModelCoordinator.m */; };
 		EDBFC8841C9097CC00715078 /* AboutTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBFC8831C9097CC00715078 /* AboutTableVC.m */; };
 		EDBFC8891C90989C00715078 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBFC8881C90989C00715078 /* Helper.m */; };
+		EDBFC88D1C911F4F00715078 /* AboutTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBFC88C1C911F4F00715078 /* AboutTableCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,8 @@
 		EDBFC8831C9097CC00715078 /* AboutTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutTableVC.m; path = AboutTableVC/AboutTableVC.m; sourceTree = "<group>"; };
 		EDBFC8871C90989C00715078 /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Helper.h; path = WebServicesHelper/Helper.h; sourceTree = "<group>"; };
 		EDBFC8881C90989C00715078 /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Helper.m; path = WebServicesHelper/Helper.m; sourceTree = "<group>"; };
+		EDBFC88B1C911F4F00715078 /* AboutTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutTableCell.h; path = Views/AboutTableCell.h; sourceTree = "<group>"; };
+		EDBFC88C1C911F4F00715078 /* AboutTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutTableCell.m; path = Views/AboutTableCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +127,7 @@
 		EDBFC83A1C90947200715078 /* AllAbout */ = {
 			isa = PBXGroup;
 			children = (
+				EDBFC88A1C911F2900715078 /* Views */,
 				EDBFC8861C90986C00715078 /* WebServiceHelper */,
 				EDBFC8851C90984100715078 /* Controllers */,
 				EDBFC87D1C90961A00715078 /* Models */,
@@ -208,6 +212,15 @@
 				EDBFC8881C90989C00715078 /* Helper.m */,
 			);
 			name = WebServiceHelper;
+			sourceTree = "<group>";
+		};
+		EDBFC88A1C911F2900715078 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EDBFC88B1C911F4F00715078 /* AboutTableCell.h */,
+				EDBFC88C1C911F4F00715078 /* AboutTableCell.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,6 +363,7 @@
 				EDBFC87C1C90961200715078 /* About.m in Sources */,
 				EDBFC8891C90989C00715078 /* Helper.m in Sources */,
 				EDBFC87B1C90961200715078 /* About+CoreDataProperties.m in Sources */,
+				EDBFC88D1C911F4F00715078 /* AboutTableCell.m in Sources */,
 				EDBFC83D1C90947200715078 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

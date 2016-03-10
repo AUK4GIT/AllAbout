@@ -9,23 +9,33 @@
 #import "AboutTableVC.h"
 #import "Helper.h"
 #import "ModelCoordinator.h"
+#import "AboutTableCell.h"
 
 @interface AboutTableVC ()
-@property(nonatomic, strong) NSArray *albums;
+@property(nonatomic, strong) NSArray *detailsArray;
 @property(nonatomic, strong) Helper *helper;
 @property(nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property(nonatomic, strong) ModelCoordinator *modelCoordinator;
-
 @end
 
 @implementation AboutTableVC
+static NSString * const reuseIdentifier = @"AboutTableCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     self.clearsSelectionOnViewWillAppear = NO;
     
-    // Initialize the refresh control.
+    /*
+        configure tableView
+     */
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 60.0;
+    [self.tableView registerClass:[AboutTableCell class] forCellReuseIdentifier:reuseIdentifier];
+    
+    /*
+        Initialize the refresh control.
+     */
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor lightGrayColor];
     self.refreshControl.tintColor = [UIColor whiteColor];
@@ -62,22 +72,22 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return 5;//self.detailsArray.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

@@ -11,12 +11,15 @@
  **/
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface Helper : NSObject
 @property(nonatomic, weak) NSURLSessionDataTask *dataTask;
 @property(nonatomic, weak) NSURLSessionDownloadTask *downloadPhotoTask;
 
 - (void)fetchDataFromDB: (void (^)(NSArray *))completionBlock;
+- (void)fetchCountryFromDB:(void (^)(NSArray *))completionBlock;
 - (void)fetchDataFromService:(void (^)(NSArray *))completionBlock;
+- (void)fetchImageWithURLString:(NSString *)urlString completionHandler:( void (^)(UIImage *))completionBlock;
 - (void)cancelDataTask;
 @end

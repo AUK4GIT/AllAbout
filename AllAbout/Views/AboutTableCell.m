@@ -18,19 +18,12 @@
     return self;
 }
 
-
-- (id)initWithCoder:(NSCoder *)aDecoder{
-    if (self = [super initWithCoder:aDecoder]) {
-        
-    }
-    return self;
-}
-
 /*
     Creates subviews on cells and add constraints.
  */
 - (void) layoutUIElementsOnCell {
-    
+    [self.contentView setTranslatesAutoresizingMaskIntoConstraints:true];
+
     self.titleLabel = [[UILabel alloc] init];
     self.titleLabel.text = @"Title: ";
     [self.titleLabel setTextColor:[UIColor blackColor]];
@@ -53,10 +46,10 @@
     
     UIImage *placehoderImage = [UIImage imageNamed:@"placeholder.png"];
     self.imgView = [[UIImageView alloc] initWithImage:placehoderImage];
-    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.contentView addSubview:self.imgView];
-    
+    [self setNeedsUpdateConstraints];
 }
 
 - (void)awakeFromNib {
@@ -89,70 +82,102 @@
                                                                  attribute:NSLayoutAttributeTop
                                                                 multiplier:1.0
                                                                   constant:8.0]];
+
+    
+    NSLayoutConstraint *widthC = [NSLayoutConstraint constraintWithItem:self.imgView
+                                                               attribute:NSLayoutAttributeWidth
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:nil
+                                                               attribute:NSLayoutAttributeNotAnAttribute
+                                                              multiplier:1.0
+                                                                constant:80.0];
+    widthC.priority = UILayoutPriorityDefaultHigh;
+    [self.contentView addConstraint:widthC];
+
+    NSLayoutConstraint *heightC = [NSLayoutConstraint constraintWithItem:self.imgView
+                                                               attribute:NSLayoutAttributeHeight
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:nil
+                                                               attribute:NSLayoutAttributeNotAnAttribute
+                                                              multiplier:1.0
+                                                                constant:80.0];
+    heightC.priority = UILayoutPriorityDefaultHigh;
+    [self.contentView addConstraint:heightC];
+
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.imgView
-                                                                 attribute:NSLayoutAttributeCenterX
+                                                                 attribute:NSLayoutAttributeLeading
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:self.contentView
-                                                                 attribute:NSLayoutAttributeCenterX
+                                                                 attribute:NSLayoutAttributeLeading
                                                                 multiplier:1.0
                                                                   constant:8.0]];
     
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.imgView
-                                                                 attribute:NSLayoutAttributeBottom
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                                 attribute:NSLayoutAttributeTop
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.contentView
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.imgView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.descriptionLabel
+                                                                 attribute:NSLayoutAttributeTop
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:self.titleLabel
-                                                                 attribute:NSLayoutAttributeTop
+                                                                 attribute:NSLayoutAttributeBottom
                                                                 multiplier:1.0
                                                                   constant:8.0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.descriptionLabel
                                                                  attribute:NSLayoutAttributeLeading
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.contentView
-                                                                 attribute:NSLayoutAttributeLeading
+                                                                    toItem:self.imgView
+                                                                 attribute:NSLayoutAttributeTrailing
                                                                 multiplier:1.0
                                                                   constant:8.0]];
+    NSLayoutConstraint *bottomC = [NSLayoutConstraint constraintWithItem:self.contentView
+                                                               attribute:NSLayoutAttributeBottom
+                                                               relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                                  toItem:self.descriptionLabel
+                                                               attribute:NSLayoutAttributeBottom
+                                                              multiplier:1.0
+                                                                constant:20.0];
+    bottomC.priority = UILayoutPriorityRequired;
+    [self.contentView addConstraint:bottomC];
     
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
-                                                                 attribute:NSLayoutAttributeBottom
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.titleLabel
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView
+                                                                 attribute:NSLayoutAttributeTrailing
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:self.descriptionLabel
-                                                                 attribute:NSLayoutAttributeTop
-                                                                multiplier:1.0
-                                                                  constant:8.0]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.descriptionLabel
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.contentView
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                multiplier:1.0
-                                                                  constant:8.0]];
-
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.descriptionLabel
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.contentView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1.0
-                                                                  constant:8.0]];
-    
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.contentView
                                                                  attribute:NSLayoutAttributeTrailing
                                                                 multiplier:1.0
                                                                   constant:8.0]];
-
-    
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.descriptionLabel
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.contentView
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                multiplier:1.0
-                                                                  constant:8.0]];
-
+    NSLayoutConstraint *bottomConstr = [NSLayoutConstraint constraintWithItem:self.contentView
+                                                                    attribute:NSLayoutAttributeBottom
+                                                                    relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                                       toItem:self.imgView
+                                                                    attribute:NSLayoutAttributeBottom
+                                                                   multiplier:1.0
+                                                                     constant:20.0];
+    bottomConstr.priority = UILayoutPriorityDefaultHigh;
+    [self.contentView addConstraint:bottomConstr];
 
 }
 

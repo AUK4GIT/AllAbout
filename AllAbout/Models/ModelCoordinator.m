@@ -24,8 +24,15 @@
     return self;
 }
 
+/*
+    fetches data from DB. Filters null data. Sorts Alphabetically
+ */
 - (NSArray *)fetchData {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"About"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title != ''"];
+    NSSortDescriptor *sortD = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:true];
+    request.sortDescriptors = @[sortD];
+    request.predicate = predicate;
     NSError *error = nil;
     NSArray *results = [managedContext executeFetchRequest:request error:&error];
     if (!results) {
@@ -35,6 +42,21 @@
     return results == nil ? @[] : results;
 }
 
+/*
+ fetches Country/Title from DB. 
+ */
+- (NSArray *)fetchCountryData {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Country"];
+    NSError *error = nil;
+    NSArray *results = [managedContext executeFetchRequest:request error:&error];
+    if (!results) {
+        NSLog(@"Error fetching About objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
+    return results == nil ? @[] : results;
+
+}
+
 - (void)saveToDBDetails:(NSArray *)details withCountry:(NSString *)countryName{
     [self deleteData:@"Country"];
     [self deleteData:@"About"];
@@ -42,7 +64,7 @@
     
     NSEntityDescription *entityPerson = [NSEntityDescription entityForName:@"Country" inManagedObjectContext:managedContext];
     Country *country = (Country *)[[NSManagedObject alloc] initWithEntity:entityPerson insertIntoManagedObjectContext:managedContext];
-    country.title = countryName;
+    country.countryName = countryName;
     
     for (NSDictionary *about in details) {
             [country saveData:about withCountry:countryName];

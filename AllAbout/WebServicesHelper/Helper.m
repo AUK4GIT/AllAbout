@@ -8,7 +8,6 @@
 
 #import "Helper.h"
 #import "ModelCoordinator.h"
-#import <UIKit/UIKit.h>
 
 @implementation Helper
 {
@@ -25,10 +24,30 @@
 }
 
 /*
+ Fetch Country Name/Title from DataBase Local
+ */
+- (void)fetchCountryFromDB:(void (^)(NSArray *))completionBlock {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        NSArray *data = [modelCoordinator fetchCountryData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionBlock(data);
+        });
+    });
+}
+
+
+/*
     Fetch Data from DataBase Local
  */
 - (void)fetchDataFromDB:(void (^)(NSArray *))completionBlock {
-    completionBlock([modelCoordinator fetchData]);
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        NSArray *data = [modelCoordinator fetchData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionBlock(data);
+        });
+    });
 }
 
 /*

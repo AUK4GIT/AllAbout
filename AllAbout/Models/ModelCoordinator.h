@@ -16,4 +16,5 @@
 
 - (NSArray *)fetchData;
 - (void)saveToDBDetails:(NSArray *)details withCountry:(NSString *)country;
+- (NSArray *)fetchCountryData;
 @end

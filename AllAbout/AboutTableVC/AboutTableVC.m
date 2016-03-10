@@ -29,7 +29,7 @@ static NSString * const reuseIdentifier = @"AboutTableCell";
         configure tableView
      */
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 60.0;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     [self.tableView registerClass:[AboutTableCell class] forCellReuseIdentifier:reuseIdentifier];
     
     /*
@@ -68,6 +68,7 @@ static NSString * const reuseIdentifier = @"AboutTableCell";
         }
         [self.refreshControl endRefreshing];
         [self.activityIndicator stopAnimating];
+        [self fetchCountryFromDB];
     }];
 }
 
@@ -81,8 +82,22 @@ static NSString * const reuseIdentifier = @"AboutTableCell";
         } else {
             [self fetchDataFromServer];
         }
+        [self fetchCountryFromDB];
     }];
 }
+
+- (void)fetchCountryFromDB {
+    
+    [self.helper fetchCountryFromDB:^(NSArray *dbDetails) {
+        if (dbDetails.count > 0) {
+            NSManagedObject *country = dbDetails[0];
+            self.title = [country valueForKey:@"countryName"];
+        } else {
+            self.title = @"All About";
+        }
+    }];
+}
+
 
 
 #pragma mark - Table view data source
@@ -98,16 +113,43 @@ static NSString * const reuseIdentifier = @"AboutTableCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AboutTableCell *cell = (AboutTableCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectedBackgroundView = nil;
     // Configure the cell...
     About *about = (About *)self.detailsArray[indexPath.row];
     cell.titleLabel.text = about.title;
     cell.descriptionLabel.text = about.aboutDescription;
-//    cell.titleLabel.text = about.title;
-    NSLog(@"%@:    %@: ",about.title,about.aboutDescription);
+    NSString *url = about.imageURL;
+    if (url.length == 0) {
+        cell.imgView.image = [UIImage imageNamed:@"noimage.png"];
+        [cell setNeedsUpdateConstraints];
+
+    } else {
+        [self.helper fetchImageWithURLString:url completionHandler:^(UIImage *image) {
+            if (image == nil) {
+                cell.imgView.image = [UIImage imageNamed:@"noimage.png"];
+            } else {
+                cell.imgView.image = image;
+            }
+            [cell setNeedsUpdateConstraints];
+        }];
+    }
     return cell;
 }
 
+// MARK: UITableViewDelegate
+
+- (CGFloat) tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self isLandscapeOrientation]) {
+        return 150;
+    } else {
+        return 200;
+    }
+}
+
+- (BOOL)isLandscapeOrientation {
+    return UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation);
+}
 
 /*
 // Override to support conditional editing of the table view.

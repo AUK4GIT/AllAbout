@@ -13,7 +13,7 @@
 
 @implementation Country (CoreDataProperties)
 
-@dynamic title;
+@dynamic countryName;
 @dynamic about;
 
 @end

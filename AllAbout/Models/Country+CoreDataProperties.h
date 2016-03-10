@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Country (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSString *title;
+@property (nullable, nonatomic, retain) NSString *countryName;
 @property (nullable, nonatomic, retain) NSManagedObject *about;
 
 @end

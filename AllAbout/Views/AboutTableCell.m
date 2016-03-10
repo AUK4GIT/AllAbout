@@ -7,16 +7,17 @@
 //
 
 #import "AboutTableCell.h"
+#import "Helper.h"
 
 @implementation AboutTableCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.translatesAutoresizingMaskIntoConstraints = false;
         [self layoutUIElementsOnCell];
     }
     return self;
 }
+
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
     if (self = [super initWithCoder:aDecoder]) {
@@ -31,23 +32,30 @@
 - (void) layoutUIElementsOnCell {
     
     self.titleLabel = [[UILabel alloc] init];
+    self.titleLabel.text = @"Title: ";
     [self.titleLabel setTextColor:[UIColor blackColor]];
-    [self.titleLabel setBackgroundColor:[UIColor colorWithHue:32 saturation:100 brightness:63 alpha:1]];
-    [self.titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:18.0f]];
+    [self.titleLabel setBackgroundColor:[UIColor clearColor]];
+    [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-bold" size:15.0f]];
     [self.titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    self.titleLabel.numberOfLines = 0;
+    self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.contentView addSubview:self.titleLabel];
     
     self.descriptionLabel = [[UILabel alloc] init];
+    self.descriptionLabel.text = @"Description: ";
     [self.descriptionLabel setTextColor:[UIColor darkGrayColor]];
-    [self.descriptionLabel setBackgroundColor:[UIColor colorWithHue:66 saturation:100 brightness:63 alpha:1]];
-    [self.descriptionLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:18.0f]];
+    [self.descriptionLabel setBackgroundColor:[UIColor clearColor]];
+    [self.descriptionLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:15.0f]];
     [self.descriptionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    self.descriptionLabel.numberOfLines = 0;
+    self.descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.contentView addSubview:self.descriptionLabel];
     
     UIImage *placehoderImage = [UIImage imageNamed:@"placeholder.png"];
     self.imgView = [[UIImageView alloc] initWithImage:placehoderImage];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.contentView addSubview:self.imageView];
+    [self.contentView addSubview:self.imgView];
     
 }
 
@@ -63,7 +71,7 @@
 }
 
 - (void)layoutSubviews {
-//    [self setNeedsUpdateConstraints];
+    [self setNeedsUpdateConstraints];
 }
 
 - (void)updateConstraints {
@@ -72,10 +80,79 @@
     /*
      Add constraints: 'horizantal center and top' to imageView
      */
-    NSLayoutConstraint *imgTopLayoutConstr = [NSLayoutConstraint constraintWithItem:self.imgView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:8.0];
-    NSLayoutConstraint *centerYConstr = [NSLayoutConstraint constraintWithItem:self.imgView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
+    
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.imgView
+                                                                 attribute:NSLayoutAttributeTop
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.contentView
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.imgView
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.contentView
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.imgView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.titleLabel
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.contentView
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.descriptionLabel
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.descriptionLabel
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.contentView
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
 
-    [self addConstraints:@[imgTopLayoutConstr, centerYConstr]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.descriptionLabel
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.contentView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.contentView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.descriptionLabel
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.contentView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+
 
 }
 

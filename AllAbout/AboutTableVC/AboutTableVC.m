@@ -9,6 +9,7 @@
 #import "AboutTableVC.h"
 #import "Helper.h"
 #import "AboutTableCell.h"
+#import "About.h"
 
 @interface AboutTableVC ()
 @property(nonatomic, strong) NSArray *detailsArray;
@@ -91,7 +92,7 @@ static NSString * const reuseIdentifier = @"AboutTableCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;//self.detailsArray.count;
+    return self.detailsArray.count;
 }
 
 
@@ -99,7 +100,11 @@ static NSString * const reuseIdentifier = @"AboutTableCell";
     AboutTableCell *cell = (AboutTableCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    
+    About *about = (About *)self.detailsArray[indexPath.row];
+    cell.titleLabel.text = about.title;
+    cell.descriptionLabel.text = about.aboutDescription;
+//    cell.titleLabel.text = about.title;
+    NSLog(@"%@:    %@: ",about.title,about.aboutDescription);
     return cell;
 }
 

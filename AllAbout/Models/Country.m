@@ -17,9 +17,21 @@
             NSEntityDescription *entity = [NSEntityDescription entityForName:@"About" inManagedObjectContext:self.managedObjectContext];
             About *aboutObj = (About *)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext];
     
-            aboutObj.title = [aboutDict objectForKey:@"username"];
-            aboutObj.aboutDescription = [aboutDict objectForKey:@"name"];
-            aboutObj.imageURL = [aboutDict objectForKey:@"email"];
+    if ([aboutDict objectForKey:@"title"] == [NSNull null]) {
+        aboutObj.title = @"No Data Available";
+    } else {
+        aboutObj.title = [aboutDict objectForKey:@"title"];
+    }
+    if ([aboutDict objectForKey:@"description"] == [NSNull null]) {
+        aboutObj.aboutDescription = @"No Data Available";
+    } else {
+        aboutObj.aboutDescription = [aboutDict objectForKey:@"description"];
+    }
+    if ([aboutDict objectForKey:@"imageHref"] == [NSNull null]) {
+        aboutObj.imageURL = @"";
+    } else {
+        aboutObj.imageURL = [aboutDict objectForKey:@"imageHref"];
+    }
     
             [self setValue:aboutObj forKey:@"about"];
             

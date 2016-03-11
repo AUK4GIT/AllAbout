@@ -19,6 +19,8 @@
         modelCoordinator = [[ModelCoordinator alloc] init];
         _dataTask = nil;
         _downloadPhotoTask = nil;
+        [self setSharedCacheForImages];
+
     }
     return self;
 }
@@ -55,11 +57,15 @@
  */
 - (void)fetchDataFromService:(void (^)(NSArray *))completionBlock {
     
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
     NSURL *aboutURL = [[NSURL alloc] initWithString:@"https://dl.dropboxusercontent.com/u/746330/facts.json"];
     
     NSURLSessionConfiguration *sessionConfig=[NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session=[NSURLSession sessionWithConfiguration:sessionConfig delegate:nil delegateQueue:nil];
     self.dataTask=[session dataTaskWithURL:aboutURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
         if (error == nil ) {
             NSError *jsonError = nil;
             NSString *str = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
@@ -98,10 +104,13 @@
     Downloads images from service
  */
 - (void)fetchImageWithURLString:(NSString *)urlString completionHandler:( void (^)(UIImage *))completionBlock {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
     NSURL *photoURL = [[NSURL alloc] initWithString:urlString];
     self.downloadPhotoTask = [[NSURLSession sharedSession]
                               downloadTaskWithURL:photoURL completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-                                  
+                                  [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
                                   UIImage *downloadedImage = [UIImage imageWithData:
                                                               [NSData dataWithContentsOfURL:location]];
                                   dispatch_async(dispatch_get_main_queue(), ^{
@@ -110,6 +119,14 @@
                               }];
     
     [self.downloadPhotoTask resume];
+}
+
+- (void)setSharedCacheForImages
+{
+    NSUInteger cashSize = 250 * 1024 * 1024;
+    NSUInteger cashDiskSize = 250 * 1024 * 1024;
+    NSURLCache *imageCache = [[NSURLCache alloc] initWithMemoryCapacity:cashSize diskCapacity:cashDiskSize diskPath:@"someCachePath"];
+    [NSURLCache setSharedURLCache:imageCache];
 }
 
 /*

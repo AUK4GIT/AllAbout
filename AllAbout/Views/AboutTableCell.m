@@ -10,6 +10,9 @@
 #import "Helper.h"
 
 @implementation AboutTableCell
+{
+    UIView *separator;
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -50,6 +53,12 @@
     [self.imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.contentView addSubview:self.imgView];
     [self setNeedsUpdateConstraints];
+    
+    separator = [[UIView alloc] init];
+    [separator setTranslatesAutoresizingMaskIntoConstraints:NO];
+    separator.backgroundColor = [UIColor redColor];
+    separator.alpha = 0.4;
+    [self.contentView addSubview:separator];
 }
 
 - (void)awakeFromNib {
@@ -143,8 +152,8 @@
                                                                  attribute:NSLayoutAttributeTrailing
                                                                 multiplier:1.0
                                                                   constant:8.0]];
-    NSLayoutConstraint *bottomC = [NSLayoutConstraint constraintWithItem:self.contentView
-                                                               attribute:NSLayoutAttributeBottom
+    NSLayoutConstraint *bottomC = [NSLayoutConstraint constraintWithItem:separator
+                                                               attribute:NSLayoutAttributeTop
                                                                relatedBy:NSLayoutRelationGreaterThanOrEqual
                                                                   toItem:self.descriptionLabel
                                                                attribute:NSLayoutAttributeBottom
@@ -169,8 +178,8 @@
                                                                  attribute:NSLayoutAttributeTrailing
                                                                 multiplier:1.0
                                                                   constant:8.0]];
-    NSLayoutConstraint *bottomConstr = [NSLayoutConstraint constraintWithItem:self.contentView
-                                                                    attribute:NSLayoutAttributeBottom
+    NSLayoutConstraint *bottomConstr = [NSLayoutConstraint constraintWithItem:separator
+                                                                    attribute:NSLayoutAttributeTop
                                                                     relatedBy:NSLayoutRelationGreaterThanOrEqual
                                                                        toItem:self.imgView
                                                                     attribute:NSLayoutAttributeBottom
@@ -178,6 +187,37 @@
                                                                      constant:20.0];
     bottomConstr.priority = UILayoutPriorityDefaultHigh;
     [self.contentView addConstraint:bottomConstr];
+    
+    
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:separator
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:separator
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                multiplier:1.0
+                                                                  constant:-8.0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:separator
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                multiplier:1.0
+                                                                  constant:8.0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:separator
+                                                                 attribute:NSLayoutAttributeHeight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0
+                                                                  constant:1.0]];
 
 }
 
